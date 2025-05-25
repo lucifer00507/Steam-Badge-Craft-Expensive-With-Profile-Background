@@ -1,4 +1,4 @@
-# generated with google gemini 2.5 flash ❤️
+# Generated with google gemini 2.5 flash ❤️
 
 # Steam-Badge-Craft-Expensive-With-Profile-Background
 
