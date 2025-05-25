@@ -1,120 +1,131 @@
-
-generated with google gemini 2.5 flash ❤️
-
-Steam-Badge-Craft-Expensive-With-Profile-Background
+# Steam-Badge-Craft-Expensive-With-Profile-Background
 
 A Python script designed to identify potential arbitrage opportunities on Steam by comparing Steam game badge crafting prices with the highest available prices for their profile backgrounds on the Steam Community Market. It fetches data from Steam Card Exchange and the Steam Market, alerts you to profitable differences, and manages processed game data persistently.
 
-✨ Features
-Badge Price Fetching: Retrieves the current crafting prices for Steam game badges from Steam Card Exchange.
+## ✨ Features
 
-Highest Background Price Discovery: For each game, it navigates to its dedicated page on Steam Card Exchange to find the highest priced profile background available.
+* **Badge Price Fetching:** Retrieves the current crafting prices for Steam game badges from Steam Card Exchange.
 
-Price Comparison & Alerting: Compares the badge crafting price to the highest background price. If the background price is significantly higher, it triggers an alert.
+* **Highest Background Price Discovery:** For each game, it navigates to its dedicated page on Steam Card Exchange to find the highest priced profile background available.
 
-Steam Market Buy Order Integration: For alerted games, it fetches real-time buy order data (highest buy price and quantity) from the Steam Community Market API.
+* **Price Comparison & Alerting:** Compares the badge crafting price to the highest background price. If the background price is significantly higher, it triggers an alert.
 
-Console Output: Provides immediate alerts and details directly in your terminal/Colab output for games meeting the alert criteria.
+* **Steam Market Buy Order Integration:** For alerted games, it fetches real-time buy order data (highest buy price and quantity) from the Steam Community Market API.
 
-Dual CSV Export for Data Management:
+* **Console Output:** Provides immediate alerts and details directly in your terminal/Colab output for games meeting the alert criteria.
 
-steam_background_alerts.csv: Stores detailed information (Game Name, AppID, Badge Price, Highest Background Price, Buy Order Price, Steam Market Link, Steam Card Exchange Link) for games that meet the alert criteria.
+* **Dual CSV Export for Data Management:**
 
-all_processed_games.csv: A comprehensive log of all AppIDs the script has attempted to process. This file is used internally for efficient skipping.
+    * `steam_background_alerts.csv`: Stores detailed information (Game Name, AppID, Badge Price, Highest Background Price, Buy Order Price, Steam Market Link, **Steam Card Exchange Link**) for games that meet the alert criteria.
 
-Robust Retry Mechanism: Implements infinite retry loops with an increasing delay (starting at 10 seconds) for all network requests to handle rate-limiting or temporary network issues from external websites/APIs.
+    * `all_processed_games.csv`: A comprehensive log of all AppIDs the script has *attempted* to process. This file is used internally for efficient skipping.
 
-Efficient Persistent Data Saving:
+* **Robust Retry Mechanism:** Implements infinite retry loops with an increasing delay (starting at 10 seconds) for all network requests to handle rate-limiting or temporary network issues from external websites/APIs.
 
-The script automatically loads previously processed game AppIDs from all_processed_games.csv on subsequent runs.
+* **Efficient Persistent Data Saving:**
 
-Crucially, it skips web requests for games that have already been processed (i.e., present in all_processed_games.csv), significantly speeding up execution on repeated runs.
+    * The script automatically loads previously processed game AppIDs from `all_processed_games.csv` on subsequent runs.
 
-CSV files are opened in append mode, ensuring new results are added without overwriting previous data.
+    * **Crucially, it skips web requests for games that have already been processed** (i.e., present in `all_processed_games.csv`), significantly speeding up execution on repeated runs.
 
-Local Version (.py): Saves files in the script's directory.
+    * CSV files are opened in append mode, ensuring new results are added without overwriting previous data.
 
-Google Colab Version (.ipynb): Integrates with Google Drive to save files persistently within your Drive.
+    * **Local Version (`.py`):** Saves files in the script's directory.
 
-🚀 How It Works
-The script first loads a list of AppIDs from all_processed_games.csv (if it exists) in the script's directory (for local runs) or from your mounted Google Drive (for Colab runs) to identify games that have already been checked.
+    * **Google Colab Version (`.ipynb`):** Integrates with Google Drive to save files persistently within your Drive.
 
-It then fetches a comprehensive list of games and their current badge crafting prices from the Steam Card Exchange API.
+## 🚀 How It Works
 
-For each game in the list:
+1.  The script first loads a list of `AppID`s from `all_processed_games.csv` (if it exists) in the script's directory (for local runs) or from your mounted Google Drive (for Colab runs) to identify games that have already been checked.
 
-It first checks if the game's AppID is in the processed_app_ids set. If it is, the game is skipped immediately without making any web requests.
+2.  It then fetches a comprehensive list of games and their current badge crafting prices from the Steam Card Exchange API.
 
-If the game is new, its AppID is logged to all_processed_games.csv.
+3.  For each game in the list:
 
-It then visits the game's specific page on Steam Card Exchange to scrape the highest listed price for any of its profile backgrounds.
+    * It first checks if the game's `AppID` is in the `processed_app_ids` set. If it is, the game is skipped immediately without making any web requests.
 
-It compares this highest background price with the game's badge crafting price.
+    * If the game is new, its `AppID` is logged to `all_processed_games.csv`.
 
-If the highest background price is strictly greater than the badge price, it considers this a potential opportunity.
+    * It then visits the game's specific page on Steam Card Exchange to scrape the highest listed price for any of its profile backgrounds.
 
-For games identified as potential opportunities, it attempts to fetch live "buy order" data from the Steam Community Market API for that specific background.
+    * It compares this highest background price with the game's badge crafting price.
 
-All relevant data for alerted games (including name, AppID, prices, Steam Market link, and Steam Card Exchange link) is printed to the console and appended to steam_background_alerts.csv.
+    * If the highest background price is strictly greater than the badge price, it considers this a potential opportunity.
 
-📋 Prerequisites
+4.  For games identified as potential opportunities, it attempts to fetch live "buy order" data from the Steam Community Market API for that specific background.
+
+5.  All relevant data for alerted games (including name, AppID, prices, Steam Market link, and Steam Card Exchange link) is printed to the console and appended to `steam_background_alerts.csv`.
+
+## 📋 Prerequisites
+
 Before running the script, ensure you have:
 
-Python 3.x installed.
+* **Python 3.x** installed.
 
-pip (Python package installer).
+* **pip** (Python package installer).
 
-🛠️ Installation
-Clone the repository (or copy the code):
+## 🛠️ Installation
 
-git clone https://github.com/YourUsername/SteamBackgroundPriceAlert.git
-cd SteamBackgroundPriceAlert
+1.  **Clone the repository (or copy the code):**
 
-(Replace YourUsername with your actual GitHub username if you fork it)
+    ```bash
+    git clone [https://github.com/YourUsername/SteamBackgroundPriceAlert.git](https://github.com/YourUsername/SteamBackgroundPriceAlert.git)
+    cd SteamBackgroundPriceAlert
+    ```
+    (Replace `YourUsername` with your actual GitHub username if you fork it)
 
-Install the required Python libraries:
+2.  **Install the required Python libraries:**
 
-pip install requests beautifulsoup4
+    ```bash
+    pip install requests beautifulsoup4
+    ```
 
-🏃 Usage
-This project provides two versions of the script: a .py file for local execution and a .ipynb (Jupyter/Colab notebook) file for use in Google Colab.
+## 🏃 Usage
 
-⚙️ Running Locally (steam_price_alert_local.py)
-This version saves steam_background_alerts.csv and all_processed_games.csv directly in the same directory as the script.
+This project provides two versions of the script: a `.py` file for local execution and a `.ipynb` (Jupyter/Colab notebook) file for use in Google Colab.
 
-Save the script: Save the Python code as steam_price_alert_local.py in your desired directory.
+### ⚙️ Running Locally (`steam_price_alert_local.py`)
 
-Navigate to the directory: Open your terminal or command prompt and navigate to the directory where you saved the script.
+This version saves `steam_background_alerts.csv` and `all_processed_games.csv` directly in the same directory as the script.
 
-Run the script:
+1.  **Save the script:** Save the Python code as `steam_price_alert_local.py` in your desired directory.
 
-python steam_price_alert_local.py
+2.  **Navigate to the directory:** Open your terminal or command prompt and navigate to the directory where you saved the script.
 
-☁️ Running on Google Colab (steam_price_alert_colab.ipynb)
-This version integrates with Google Drive for persistent storage of steam_background_alerts.csv and all_processed_games.csv.
+3.  **Run the script:**
 
-Open Google Colab: Go to colab.research.google.com.
+    ```bash
+    python steam_price_alert_local.py
+    ```
 
-Create a New Notebook: Click File > New notebook.
+### ☁️ Running on Google Colab (`steam_price_alert_colab.ipynb`)
 
-Copy the Code: Copy the entire Python script (the one with Google Drive integration) into the Colab notebook cell.
+This version integrates with Google Drive for persistent storage of `steam_background_alerts.csv` and `all_processed_games.csv`.
 
-Save as .ipynb: Save the notebook (e.g., as steam_price_alert_colab.ipynb).
+1.  **Open Google Colab:** Go to [colab.research.google.com](https://colab.research.google.com/).
 
-Run the Cell: Click the "Run" button (play icon) next to the cell, or press Shift + Enter.
+2.  **Create a New Notebook:** Click `File > New notebook`.
 
-Authorize Google Drive:
+3.  **Copy the Code:** Copy the entire Python script (the one with Google Drive integration) into the Colab notebook cell.
 
-The first time you run it, you will be prompted to authorize Google Drive access. Click the link provided in the output.
+4.  **Save as .ipynb:** Save the notebook (e.g., as `steam_price_alert_colab.ipynb`).
 
-Select your Google account, grant the necessary permissions.
+5.  **Run the Cell:** Click the "Run" button (play icon) next to the cell, or press `Shift + Enter`.
 
-Copy the authorization code provided by Google back into the input box in Colab and press Enter.
+6.  **Authorize Google Drive:**
 
-Monitor Output: The script will start fetching data and printing alerts to the console. The CSV files will be created/updated in a folder named SteamAlerts within your Google Drive's My Drive (e.g., /content/drive/My Drive/SteamAlerts/).
+    * The first time you run it, you will be prompted to authorize Google Drive access. Click the link provided in the output.
 
-📊 Output
-Console Alerts
+    * Select your Google account, grant the necessary permissions.
+
+    * Copy the authorization code provided by Google back into the input box in Colab and press Enter.
+
+7.  **Monitor Output:** The script will start fetching data and printing alerts to the console. The CSV files will be created/updated in a folder named `SteamAlerts` within your Google Drive's `My Drive` (e.g., `/content/drive/My Drive/SteamAlerts/`).
+
+## 📊 Output
+
+### Console Alerts
+
 When a potential opportunity is found, output similar to this will appear in your console:
 
 Checking 'Arcane Raise' (AppID: 603750, List Price: $1.07)...
@@ -126,69 +137,46 @@ Checking 'Arcane Raise' (AppID: 603750, List Price: $1.07)...
 
 You will also see "Skipping..." messages for games that have been processed in previous runs, indicating that no new web requests are being made for them.
 
-CSV Files
-steam_background_alerts.csv
+### CSV Files
+
+#### `steam_background_alerts.csv`
+
 This file will contain detailed information for games where the highest background price is greater than the badge price.
 
-Column Name
+| Column Name | Description |
+| :---------- | :---------- |
+| `game name` | The name of the game. |
+| `app id` | The Steam Application ID. |
+| `badge price` | The crafting price of the game's badge (your initial investment). |
+| `highest background price` | The highest price found for any of the game's profile backgrounds on Steam Card Exchange. |
+| `buy order price` | The highest active buy order price on the Steam Market for the identified background. |
+| `highest background steam market link` | A direct link to the Steam Community Market listing for the specific background. |
+| `steam card exchange link` | A direct link to the game's page on Steam Card Exchange. |
 
-Description
+#### `all_processed_games.csv`
 
-game name
-
-The name of the game.
-
-app id
-
-The Steam Application ID.
-
-badge price
-
-The crafting price of the game's badge (your initial investment).
-
-highest background price
-
-The highest price found for any of the game's profile backgrounds on Steam Card Exchange.
-
-buy order price
-
-The highest active buy order price on the Steam Market for the identified background.
-
-highest background steam market link
-
-A direct link to the Steam Community Market listing for the specific background.
-
-steam card exchange link
-
-A direct link to the game's page on Steam Card Exchange.
-
-all_processed_games.csv
 This file is a simple log used internally by the script to track which AppIDs have already been processed. It contains a single column:
 
-Column Name
+| Column Name | Description |
+| :---------- | :---------- |
+| `AppID` | The Steam Application ID of a processed game. |
 
-Description
+## ⚠️ Important Notes & Disclaimer
 
-AppID
+* **External Dependencies:** This script relies on data provided by `steamcardexchange.net` and `steamcommunity.com` (Steam Market API). Changes to their website structure or API endpoints may break the script.
 
-The Steam Application ID of a processed game.
+* **Rate Limiting:** While robust infinite retry logic with exponential backoff is implemented, excessive requests may still lead to temporary IP bans or CAPTCHAs from Steam or Steam Card Exchange. Use responsibly.
 
-⚠️ Important Notes & Disclaimer
-External Dependencies: This script relies on data provided by steamcardexchange.net and steamcommunity.com (Steam Market API). Changes to their website structure or API endpoints may break the script.
+* **Market Volatility:** Prices on the Steam Market are highly volatile. The prices fetched are snapshots and can change rapidly.
 
-Rate Limiting: While robust infinite retry logic with exponential backoff is implemented, excessive requests may still lead to temporary IP bans or CAPTCHAs from Steam or Steam Card Exchange. Use responsibly.
+* **Profitability:** The "buy order price" indicates what people are *currently* willing to pay. Actual sale prices after market fees might be lower. This script identifies *potential* opportunities, not guaranteed profits.
 
-Market Volatility: Prices on the Steam Market are highly volatile. The prices fetched are snapshots and can change rapidly.
+* **Manual Verification:** Always manually verify prices and market conditions on Steam before making any purchasing decisions.
 
-Profitability: The "buy order price" indicates what people are currently willing to pay. Actual sale prices after market fees might be lower. This script identifies potential opportunities, not guaranteed profits.
+* **Google Drive Permissions:** (Relevant for Colab users) Ensure you grant the necessary permissions when prompted by Google Colab to allow the script to create and write to files in your Google Drive.
 
-Manual Verification: Always manually verify prices and market conditions on Steam before making any purchasing decisions.
+## 🤝 Contributing
 
-Google Drive Permissions: (Relevant for Colab users) Ensure you grant the necessary permissions when prompted by Google Colab to allow the script to create and write to files in your Google Drive.
-
-🤝 Contributing
 Contributions, issues, and feature requests are welcome! Feel free to open an issue or submit a pull request.
 
-📄 License
-This project is licensed under the MIT License. (Consider creating a LICENSE file in your repository if you choose this or another license)
-
+## 📄 License
