@@ -1,3 +1,5 @@
+# generated with google gemini 2.5 flash ❤️
+
 # Steam-Badge-Craft-Expensive-With-Profile-Background
 
 A Python script designed to identify potential arbitrage opportunities on Steam by comparing Steam game badge crafting prices with the highest available prices for their profile backgrounds on the Steam Community Market. It fetches data from Steam Card Exchange and the Steam Market, alerts you to profitable differences, and manages processed game data persistently.
